@@ -1172,6 +1172,12 @@
     <ClCompile Include="..\ext\libzip\zip_random_win32.c">
       <Filter>Ext\libzip</Filter>
     </ClCompile>
+    <ClCompile Include="Debugger\WebSocket\ReplaySubscriber.cpp">
+      <Filter>Debugger\WebSocket</Filter>
+    </ClCompile>
+    <ClCompile Include="ControlMapper.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ELF\ElfReader.h">
@@ -1885,6 +1891,12 @@
     </ClInclude>
     <ClInclude Include="..\ext\libzip\zipconf.h">
       <Filter>Ext\libzip</Filter>
+    </ClInclude>
+    <ClInclude Include="Debugger\WebSocket\ReplaySubscriber.h">
+      <Filter>Debugger\WebSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="ControlMapper.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -700,6 +700,9 @@
     <ClCompile Include="..\..\Core\Debugger\WebSocket\MemoryInfoSubscriber.cpp">
       <Filter>Debugger\WebSocket</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Core\Debugger\WebSocket\ReplaySubscriber.cpp">
+      <Filter>Debugger\WebSocket</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Core\Debugger\WebSocket\SteppingBroadcaster.cpp">
       <Filter>Debugger\WebSocket</Filter>
     </ClCompile>
@@ -1018,9 +1021,6 @@
     <ClCompile Include="..\..\ext\libzip\zip_pkware.c">
       <Filter>Ext\libzip</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\ext\libzip\zip_mkstempm.c">
-      <Filter>Ext\libzip</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ext\libzip\zip_libzip_version.c">
       <Filter>Ext\libzip</Filter>
     </ClCompile>
@@ -1107,6 +1107,7 @@
     </ClCompile>
     <ClCompile Include="..\..\Core\KeyMap.cpp" />
     <ClCompile Include="..\..\Core\ThreadPools.cpp" />
+    <ClCompile Include="..\..\Core\ControlMapper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
@@ -1701,6 +1702,9 @@
     <ClInclude Include="..\..\Core\Debugger\WebSocket\MemoryInfoSubscriber.h">
       <Filter>Debugger\WebSocket</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Core\Debugger\WebSocket\ReplaySubscriber.h">
+      <Filter>Debugger\WebSocket</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Core\Debugger\WebSocket\SteppingBroadcaster.h">
       <Filter>Debugger\WebSocket</Filter>
     </ClInclude>
@@ -1742,6 +1746,7 @@
     </ClInclude>
     <ClInclude Include="..\..\Core\KeyMap.h" />
     <ClInclude Include="..\..\Core\ThreadPools.h" />
+    <ClInclude Include="..\..\Core\ControlMapper.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\ext\gason\LICENSE">

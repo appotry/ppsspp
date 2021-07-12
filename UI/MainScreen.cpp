@@ -505,7 +505,7 @@ void GameBrowser::FocusGame(const Path &gamePath) {
 
 void GameBrowser::SetPath(const Path &path) {
 	path_.SetPath(path);
-	g_Config.currentDirectory = path_.GetPath().ToString();
+	g_Config.currentDirectory = path_.GetPath();
 	Refresh();
 }
 
@@ -669,6 +669,11 @@ void GameBrowser::Refresh() {
 		} else {
 			topBar->Add(new Spacer(new LinearLayoutParams(FILL_PARENT, 64.0f, 1.0f)));
 		}
+
+		if (browseFlags_ & BrowseFlags::HOMEBREW_STORE) {
+			topBar->Add(new Choice(mm->T("PPSSPP Homebrew Store"), new UI::LinearLayoutParams(WRAP_CONTENT, 64.0f)))->OnClick.Handle(this, &GameBrowser::OnHomebrewStore);
+		}
+
 		ChoiceStrip *layoutChoice = topBar->Add(new ChoiceStrip(ORIENT_HORIZONTAL));
 		layoutChoice->AddChoice(ImageID("I_GRID"));
 		layoutChoice->AddChoice(ImageID("I_LINES"));
@@ -806,11 +811,6 @@ void GameBrowser::Refresh() {
 			OnClick.Handle(this, &GameBrowser::PinToggleClick);
 	}
 
-	if (browseFlags_ & BrowseFlags::HOMEBREW_STORE) {
-		Add(new Spacer());
-		Add(new Choice(mm->T("DownloadFromStore", "Download from the PPSSPP Homebrew Store"), new UI::LinearLayoutParams(UI::WRAP_CONTENT, UI::WRAP_CONTENT)))->OnClick.Handle(this, &GameBrowser::OnHomebrewStore);
-	}
-
 	if (!lastText_.empty() && gameButtons.empty()) {
 		Add(new Spacer());
 		Add(new Choice(lastText_, new UI::LinearLayoutParams(UI::WRAP_CONTENT, UI::WRAP_CONTENT)))->OnClick.Handle(this, &GameBrowser::LastClick);
@@ -905,7 +905,7 @@ UI::EventReturn GameBrowser::NavigateClick(UI::EventParams &e) {
 	} else {
 		path_.Navigate(text.ToString());
 	}
-	g_Config.currentDirectory = path_.GetPath().ToString();
+	g_Config.currentDirectory = path_.GetPath();
 	Refresh();
 	return UI::EVENT_DONE;
 }
@@ -1206,34 +1206,7 @@ void MainScreen::sendMessage(const char *message, const char *value) {
 			LaunchFile(screenManager(), Path(std::string(value)));
 		}
 		if (!strcmp(message, "browse_folderSelect")) {
-			std::string filename;
-#if PPSSPP_PLATFORM(ANDROID)
-			// Hacky way to get a normal path from a Android Storage Framework path.
-			// Is not gonna work forever, but ship-hack for 1.11.
-			std::string url = value;
-			const char *prefix = "content://com.android.externalstorage.documents/tree/";
-			const char *primaryPrefix = "/storage/primary/";
-			if (startsWith(url, prefix)) {
-				url = UriDecode(url.substr(strlen(prefix)));
-				size_t colonPos = url.find(":");
-				if (colonPos != std::string::npos) {
-					url[colonPos] = '/';
-				}
-				url = "/storage/" + url;
-				if (startsWith(url, primaryPrefix)) {
-					url = g_Config.memStickDirectory.ToString() + url.substr(strlen(primaryPrefix));
-				}
-				INFO_LOG(SYSTEM, "Translated '%s' into '%s'", value, url.c_str());
-			} else {
-				// It's not gonna work.
-				// TODO: Show an error message?
-				INFO_LOG(SYSTEM, "Failed to parse content string: '%s'", value);
-				return;
-			}
-			filename = url;
-#else
-			filename = value;
-#endif
+			std::string filename = value;
 			INFO_LOG(SYSTEM, "Got folder: '%s'", filename.c_str());
 			int tab = tabHolder_->GetCurrentTab();
 			// Don't allow browsing in the other tabs (I don't think it's possible to reach the option though)
